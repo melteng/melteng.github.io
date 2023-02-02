@@ -1,0 +1,222 @@
+body{
+  margin: 0;
+  padding: 0;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  /* width: 100%;*/
+  left: 25%;
+  width: 75%;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap');
+
+.mapboxgl-map {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+}
+
+.map-overlay {
+  position: absolute;
+  width: 25%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  background-color: #efefef;
+  max-height: 100%;
+  overflow: hidden;
+}
+   
+.map-overlay fieldset {
+  display: none;
+  background: #131d27;
+  border: none;
+  padding: 10px;
+  margin: 0;
+}
+   
+.map-overlay input {
+  display: block;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  padding: 10px;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  color: #aa0736;
+  box-sizing: border-box;
+  background-color: #ededed;
+}
+   
+.map-overlay .listing {
+  overflow: auto;
+  max-height: 100%;
+}
+   
+.map-overlay .listing > * {
+  display: block;
+  padding: 0.7rem 1rem;
+  margin: 0;
+}
+   
+.map-overlay .listing a {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  color: #aa0736;
+  font-weight: 600;
+  text-decoration: none;
+}
+   
+.map-overlay .listing a:last-child {
+  border: none;
+}
+   
+.map-overlay .listing a:hover {
+  background: #f0f0f0;
+}
+
+/* WWHI custom marker  */
+.marker {
+  background-image: url('assets/wwhi-marker.png');
+  background-size: cover;
+  width: 50px;
+  height: 58px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* popup styles */
+
+.search-popup .mapboxgl-popup-content {
+  border: 2px solid #131d27;
+  padding: 1rem;
+  box-sizing: border-box;
+  background-color: #f3058e;
+}
+
+.search-popup h3,
+.search-popup p {
+  margin: 0;
+  padding-bottom: 0.7rem;
+  color: #ffef88;
+  font-size: 1rem;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.marker-popup .mapboxgl-popup-content {
+  overflow-y: scroll;
+  max-height: 600px;
+  border: 2px solid #131d27;
+  padding: 0;
+  background-color: #fff;
+}
+
+.marker-popup .mapboxgl-popup-tip,
+.search-popup .mapboxgl-popup-tip {
+  border-bottom-color: #131d27;
+  border-top-color: #131d27;
+}
+
+.marker-popup .popup-title {
+  border: 6px solid #aa0736;
+  box-sizing: border-box;
+  background-color: #f3058e;
+}
+
+.marker-popup .popup-title,
+.marker-popup .popup-address,
+.marker-popup .popup-contact,
+.marker-popup .popup-services {
+  padding: 1rem;
+}
+
+.marker-popup .popup-title h3 {
+  margin: 0;
+  padding-bottom: 0.7rem;
+  color: #ffef88;
+  font-size: 1.25rem;
+  line-height: 1;
+  font-weight: 600;
+  width: 90%;
+}
+
+.marker-popup .popup-title a {
+  text-decoration: none;
+  color: #f2f2f2;
+}
+
+.marker-popup a:hover {
+  opacity: 0.5;
+}
+
+.marker-popup .popup-title img {
+  width: 1.5rem;
+  padding-right: 0.7rem;
+}
+
+.marker-popup .popup-contact {
+  border: 6px solid #7fa99d;
+  box-sizing: border-box;
+  background-color: #131d27;
+  color: #f2f2f2;
+}
+
+.marker-popup .popup-contact strong {
+  color: #c23cfd;
+}
+
+.marker-popup .popup-contact a {
+  text-decoration: none;
+  color: #f2f2f2;
+  border-bottom: 1px solid #81b7a9;
+}
+
+.marker-popup .popup-address {
+  border: 6px solid #e7c073;
+  background-color: #131d27;
+  color: #f2f2f2;
+}
+
+.marker-popup .popup-address strong {
+  color: #e7c073;
+}
+
+.marker-popup .popup-services {
+  border: 6px solid #c5daae;
+  background-color: #131d27;
+  color: #f2f2f2;
+}
+
+.marker-popup .popup-services strong {
+  color: #c5daae;
+}
+
+.marker-popup p {
+  margin: 0.5rem 0;
+}
+
+.marker-popup strong {
+  color: #adadad;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.02rem;
+}
+
+.marker-popup .mapboxgl-popup-close-button {
+  padding: 1rem;
+  font-size: 1.5rem;
+  color: #fff;
+  font-weight: 400;
+}
+
+.marker-popup .mapboxgl-popup-content .mapboxgl-popup-close-button:hover {
+  background-color: transparent;
+  color: #eac84a;
+}
