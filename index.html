@@ -12,11 +12,20 @@
     <![endif]-->
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-light.css">
-    
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
     <link rel="stylesheet" href="stylesheets/wwhi-styles.css">
+
+    <style>
+      /* WWHI custom marker  */
+      .marker {
+        background-image: url('assets/wwhi-marker.png');
+        background-size: cover;
+        width: 43px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+    </style>
     
   </head>
   <body>
@@ -27,24 +36,6 @@
       </fieldset>
       <div id="feature-listing" class="listing"></div>
     </div>
-    <!-- <div class="wrapper">
-      <header>
-        <h1>Waking Women Healing Institute: Resource Map</h1>
-        <p></p>
-
-        <p class="view"><a href="https://github.mit.edu/data-feminism-lab/wwhi-resource-map">View the Project on GitHub <small>data-feminism-lab/wwhi-resource-map</small></a></p>
-      </header>
-      <section>
-        <h3>
-          <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Welcome to GitHub Pages.
-        </h3>
-          <p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here <a href="https://guides.github.com/features/mastering-markdown/">using GitHub Flavored Markdown</a>, select a template crafted by a designer, and publish. After your page is generated, you can check out the new <code>gh-pages</code> branch locally. If you’re using GitHub Desktop, simply sync your repository and you’ll see the new branch.</p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.mit.edu/data-feminism-lab">data-feminism-lab</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div> -->
     <script src="javascripts/scale.fix.js"></script>
     <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoibXFxdCIsImEiOiJjbGFyMHUxZXgxbnV5M3Bxcnl2eGc3eXgzIn0.9WJL8GwpLdJEa1c6vk57iw';
@@ -52,7 +43,7 @@
     const map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mqqt/claxt1hpw000114pdg7bl6l5w',
-      center: [-103.641557, 47.893748],
+      center: [-110.641557, 43.893748],
       minZoom: 2.7,
       zoom: 3.3
     });
@@ -173,17 +164,18 @@
     map.on('load', () => {
       map.addSource('resources', {
         'type': 'vector',
-        'url': 'mapbox://mqqt.clbkzgyq91bkc21obx72qbbmh-73oak'
+        'url': 'mapbox://mqqt.cle26o6w401u421n3hck97uvc-8z77s'
       });
 
       map.addLayer({
           'id': 'resource',
           'source': 'resources',
-          'source-layer': '121222_MMIP_Resources',
+          'source-layer': '021223_MMIP_Resources',
           'type': 'circle',
           'paint': {
             'circle-color': '#f3058e',
             'circle-radius': 4,
+            'circle-opacity': 0.71,
             'circle-stroke-width': 2,
             'circle-stroke-color': '#9d181d'
           }

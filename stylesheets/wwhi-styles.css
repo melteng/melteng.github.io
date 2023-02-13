@@ -80,16 +80,6 @@ body{
   background: #f0f0f0;
 }
 
-/* WWHI custom marker  */
-.marker {
-  background-image: url('assets/wwhi-marker.png');
-  background-size: cover;
-  width: 50px;
-  height: 58px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
 /* popup styles */
 
 .search-popup .mapboxgl-popup-content {
