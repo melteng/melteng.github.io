@@ -43,14 +43,49 @@
 
       #map-container {
         position: relative;
+        display: flex;
+        flex-direction: column-reverse;
         width: 100%;
         height: 100vh;
       }
 
       #map, .map-overlay {
-        position: absolute;
-        top: 0;
-        bottom: 0;
+        position: relative;
+        width: 100%;
+      }
+
+      #map {
+        height: 100vh;
+      }
+
+      .map-overlay {
+        height: 400px;
+      }
+
+      @media screen and (min-width: 769px) {
+        #map-container {
+          display: block;
+          position: relative;
+          width: 100%;
+          height: 100vh;
+        }
+
+        #map, .map-overlay {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          height: 100%;
+        }
+
+        #map {
+          left: 25%;
+          width: 75%;
+        }
+
+        .map-overlay {
+          width: 25%;
+          left: 0;
+        }
       }
 
       /* about styles */
@@ -95,21 +130,16 @@
       /* map styles */
 
       #map {
-        /* width: 100%;*/
-        left: 25%;
-        width: 75%;
       }
 
       .map-overlay {
-        width: 25%;
-        left: 0;
         font-family: 'Roboto', sans-serif;
         font-size: 1rem;
         background-color: #efefef;
         max-height: 100%;
         overflow: hidden;
       }
-         
+
       .map-overlay fieldset {
         display: none;
         background: #131d27;
