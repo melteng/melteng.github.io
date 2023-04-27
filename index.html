@@ -11,7 +11,9 @@
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+    <script src="https://npmcdn.com/csv2geojson@latest/csv2geojson.js"></script>
+    <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
 
     <style>
@@ -357,11 +359,13 @@
 
     const map = new mapboxgl.Map({
       container: 'map',
-      style: 'mapbox://styles/mqqt/claxt1hpw000114pdg7bl6l5w',
+      style: 'mapbox://styles/mqqt/claxt1hpw000114pdg7bl6l5w/draft',
       center: [-110.641557, 35.893748],
       minZoom: 2.7,
       zoom: 3.0
     });
+
+    map.addControl(new mapboxgl.NavigationControl());
 
     /*
       Add a marker at WWHI's coordinates, based on https://docs.mapbox.com/help/tutorials/custom-markers-gl-js/
@@ -476,17 +480,31 @@
       return uniqueFeatures;
     }
 
-    map.on('load', () => {
-      map.addSource('resources', {
-        'type': 'vector',
-        'url': 'mapbox://mqqt.cle26o6w401u421n3hck97uvc-8z77s'
-      });
+    $(document).ready(function () {
+      $.ajax({
+        type: "GET",
+        //YOUR TURN: Replace with csv export link
+        url: 'https://docs.google.com/spreadsheets/d/1DR1vvT3nVqXwfbxo9HOE8YCsLrsRoJk2ojdxApv6-ak/gviz/tq?tqx=out:csv&gid=1072666960',
+        dataType: "text",
+        success: function (resource) { makeGeoJSON(resource); }
+      })});
 
-      map.addLayer({
-          'id': 'resource',
-          'source': 'resources',
-          'source-layer': '021223_MMIP_Resources',
-          'type': 'circle',
+      function makeGeoJSON(resource) {
+        csv2geojson.csv2geojson(resource, {
+          latfield: 'latitude',
+          lonfield: 'longitude',
+          delimiter: ','
+        }, function (err, data) {
+          map.on('load', function () {
+
+            //Add the the layer to the map
+            map.addLayer({
+              'id': 'resource',
+              'type': 'circle',
+              'source': {
+                'type': 'geojson',
+                'data': data
+              },
           'paint': {
             'circle-color': '#f3058e',
             'circle-radius': 4,
@@ -494,7 +512,8 @@
             'circle-stroke-width': 2,
             'circle-stroke-color': '#9d181d'
           }
-      });
+      })}
+      )});
 
       map.on('movestart', () => {
           // reset features filter as the map starts moving
@@ -591,7 +610,7 @@
       // Call this function on initialization
       // passing an empty array to render an empty state
       renderListings([]);
-    });
+    };
 
     </script>
     
