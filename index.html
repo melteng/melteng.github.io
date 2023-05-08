@@ -11,326 +11,15 @@
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
     <script src="https://npmcdn.com/csv2geojson@latest/csv2geojson.js"></script>
     <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
+    <script src="javascripts/scale.fix.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
-
-    <style>
-
-      @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap');
-
-      body{
-        margin: 0;
-        padding: 0;
-        font-family: 'Roboto', sans-serif;
-      }
-
-      .mapboxgl-map {
-        font-family: 'Roboto', sans-serif;
-        font-size: 1rem;
-      }
-
-      /* page structure */
-      #about {
-        position: relative;
-        background-color: #bad37b;
-        width: 100%;
-        padding: 20px 10vw 25px;
-        border-bottom: 6px solid #131d27;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column-reverse;
-      }
-
-      #map-container {
-        position: relative;
-        display: flex;
-        flex-direction: column-reverse;
-        width: 100%;
-        height: 100vh;
-      }
-
-      #map, .map-overlay {
-        position: relative;
-        width: 100%;
-      }
-
-      #map {
-        height: 100vh;
-      }
-
-      .map-overlay {
-        height: 400px;
-      }
-
-      @media screen and (min-width: 769px) {
-        #map-container {
-          display: block;
-          position: relative;
-          width: 100%;
-          height: 100vh;
-        }
-
-        #map, .map-overlay {
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          height: 100%;
-        }
-
-        #map {
-          left: 25%;
-          width: 75%;
-        }
-
-        .map-overlay {
-          width: 25%;
-          left: 0;
-        }
-      }
-
-      /* about styles */
-      #about h1, #about p {
-        margin: 0;
-        color: #243114;
-      }
-
-      @media screen and (min-width: 769px) {
-        #about {
-          flex-direction: row;
-        }
-
-        #intro-text {
-          margin-right: 60px;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-        }
-      }
-
-      #about img {
-        display: block;
-        width: 239.5px;
-        height: 200px;
-        margin: 0 auto;
-        padding: 10px;
-        box-sizing: border-box;
-      }
-
-      #about h1 {
-        margin: 15px 0 20px;
-        font-weight: 500;
-        font-size: 1.3rem;
-      }
-
-      #about p {
-        font-size: 1rem;
-        line-height: 1.5;
-      }
-
-      /* map styles */
-
-      #map {
-      }
-
-      .map-overlay {
-        font-family: 'Roboto', sans-serif;
-        font-size: 1rem;
-        background-color: #efefef;
-        max-height: 100%;
-        overflow: hidden;
-      }
-
-      .map-overlay fieldset {
-        display: none;
-        background: #131d27;
-        border: none;
-        padding: 10px;
-        margin: 0;
-      }
-         
-      .map-overlay input {
-        display: block;
-        border: none;
-        width: 100%;
-        border-radius: 3px;
-        padding: 10px;
-        margin: 0;
-        font-family: 'Roboto', sans-serif;
-        font-size: 1rem;
-        color: #aa0736;
-        box-sizing: border-box;
-        background-color: #ededed;
-      }
-         
-      .map-overlay .listing {
-        overflow: auto;
-        max-height: 100%;
-      }
-         
-      .map-overlay .listing > * {
-        display: block;
-        padding: 0.7rem 1rem;
-        margin: 0;
-      }
-         
-      .map-overlay .listing a {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        color: #aa0736;
-        font-weight: 600;
-        text-decoration: none;
-      }
-         
-      .map-overlay .listing a:last-child {
-        border: none;
-      }
-         
-      .map-overlay .listing a:hover {
-        background: #f0f0f0;
-      }
-
-      /* popup styles */
-
-      .search-popup .mapboxgl-popup-content {
-        border: 2px solid #131d27;
-        padding: 1rem;
-        box-sizing: border-box;
-        background-color: #f3058e;
-      }
-
-      .search-popup h3,
-      .search-popup p {
-        margin: 0;
-        padding-bottom: 0.7rem;
-        color: #ffef88;
-        font-size: 1rem;
-        line-height: 1;
-        font-weight: 600;
-      }
-
-      .marker-popup .mapboxgl-popup-content {
-        overflow-y: scroll;
-        max-height: 700px;
-        border: 2px solid #131d27;
-        padding: 0;
-        background-color: #fff;
-      }
-
-      .marker-popup .mapboxgl-popup-tip,
-      .search-popup .mapboxgl-popup-tip {
-        border-bottom-color: #131d27;
-        border-top-color: #131d27;
-      }
-
-      .marker-popup .popup-title {
-        border: 6px solid #aa0736;
-        box-sizing: border-box;
-        background-color: #f3058e;
-      }
-
-      .marker-popup .popup-title,
-      .marker-popup .popup-address,
-      .marker-popup .popup-contact,
-      .marker-popup .popup-services {
-        padding: 1rem;
-      }
-
-      .marker-popup .popup-title h3 {
-        margin: 0;
-        padding-bottom: 0.7rem;
-        color: #ffef88;
-        font-size: 1.25rem;
-        line-height: 1;
-        font-weight: 600;
-        width: 90%;
-      }
-
-      .marker-popup .popup-title a {
-        text-decoration: none;
-        color: #f2f2f2;
-      }
-
-      .marker-popup a:hover {
-        opacity: 0.5;
-      }
-
-      .marker-popup .popup-title img {
-        width: 1.5rem;
-        padding-right: 0.7rem;
-      }
-
-      .marker-popup .popup-contact {
-        border: 6px solid #7fa99d;
-        box-sizing: border-box;
-        background-color: #131d27;
-        color: #f2f2f2;
-      }
-
-      .marker-popup .popup-contact strong {
-        color: #c23cfd;
-      }
-
-      .marker-popup .popup-contact a {
-        text-decoration: none;
-        color: #f2f2f2;
-        border-bottom: 1px solid #81b7a9;
-      }
-
-      .marker-popup .popup-address {
-        border: 6px solid #e7c073;
-        background-color: #131d27;
-        color: #f2f2f2;
-      }
-
-      .marker-popup .popup-address strong {
-        color: #e7c073;
-      }
-
-      .marker-popup .popup-services {
-        border: 6px solid #c5daae;
-        background-color: #131d27;
-        color: #f2f2f2;
-      }
-
-      .marker-popup .popup-services strong {
-        color: #c5daae;
-      }
-
-      .marker-popup p {
-        margin: 0.5rem 0;
-      }
-
-      .marker-popup strong {
-        color: #adadad;
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        font-weight: 800;
-        letter-spacing: 0.02rem;
-      }
-
-      .marker-popup .mapboxgl-popup-close-button {
-        padding: 1rem;
-        font-size: 1.5rem;
-        color: #fff;
-        font-weight: 400;
-      }
-
-      .marker-popup .mapboxgl-popup-content .mapboxgl-popup-close-button:hover {
-        background-color: transparent;
-        color: #eac84a;
-      }
-
-      /* WWHI custom marker  */
-      .marker {
-        background-image: url('assets/wwhi-marker.png');
-        background-size: cover;
-        width: 43px;
-        height: 50px;
-        border-radius: 50%;
-        cursor: pointer;
-      }
-    </style>
+    <link href="style.css" rel ='stylesheet'>
 
   </head>
   <body>
@@ -343,6 +32,7 @@
         <a href='https://www.wakingwomenhealingint.org/' target='_blank'><img src='assets/wwhi-logo.png'/></a>
       </div>
     </div>
+  <body>
     <div id='map-container'>
       <div id='map'></div>
       <div class="map-overlay">
@@ -352,268 +42,268 @@
         <div id="feature-listing" class="listing"></div>
       </div>
     </div>
+    <script>mapboxgl.accessToken = 'pk.eyJ1IjoibXFxdCIsImEiOiJjbGFyMHUxZXgxbnV5M3Bxcnl2eGc3eXgzIn0.9WJL8GwpLdJEa1c6vk57iw';
 
-    <script src="javascripts/scale.fix.js"></script>
-    <script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoibXFxdCIsImEiOiJjbGFyMHUxZXgxbnV5M3Bxcnl2eGc3eXgzIn0.9WJL8GwpLdJEa1c6vk57iw';
-
-    const map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mqqt/claxt1hpw000114pdg7bl6l5w/draft',
-      center: [-110.641557, 35.893748],
-      minZoom: 2.7,
-      zoom: 3.0
-    });
-
-    map.addControl(new mapboxgl.NavigationControl());
-
-    /*
-      Add a marker at WWHI's coordinates, based on https://docs.mapbox.com/help/tutorials/custom-markers-gl-js/
-    */
-    const geojson = {
-      type: 'FeatureCollection',
-      features: [
-        {
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: [-88.787436, 44.8555164] // WWHI's [lng, lat] coordinates
-          },
-          properties: {
-            title: 'Waking Women Healing Institute',
-            description: 'Waking Women Healing Institute'
-          }
-        }
-      ]
-    };
-
-    // add markers to map for each Feature
-    for (const feature of geojson.features) {
-      // create a HTML element for each feature
-      const el = document.createElement('div');
-      el.className = 'marker';
-      // make a marker for each feature and add to the map
-      new mapboxgl.Marker(el)
-        .setLngLat(feature.geometry.coordinates)
-        .addTo(map);
-    }
-
-
-    /*
-      Create left filter search; based on https://docs.mapbox.com/mapbox-gl-js/example/filter-features-within-map-view/
-    */
-
-    // Holds visible resource features for filtering
-    let resources = [];
-
-    // Create a popup, but don't add it to the map yet.
-    const popup = new mapboxgl.Popup({
-      closeButton: false,
-      className: 'search-popup'
-    });
-
-    const filterEl = document.getElementById('feature-filter');
-    const listingEl = document.getElementById('feature-listing');
-
-    function renderListings(features) {
-      const empty = document.createElement('p');
-
-      // Clear any existing listings
-      listingEl.innerHTML = '';
-      if (features.length) {
-        for (const feature of features) {
-          const itemLink = document.createElement('a');
-          const label = `${feature.properties.orgName}`;
-          itemLink.href = feature.properties.orgLink;
-          itemLink.target = '_blank';
-          itemLink.textContent = label;
-          itemLink.addEventListener('mouseover', () => {
-            // Highlight corresponding feature on the map
-            popup
-              .setLngLat(feature.geometry.coordinates)
-              .setHTML(
-                `<h3>${feature.properties.orgName}</h3>
-                 <p>${feature.properties.fullAddress}</p>`
-              )
-              .addTo(map);
-          });
-          listingEl.appendChild(itemLink);
-          itemLink.addEventListener('mouseleave', () => {
-            popup.remove();
-          });
-        }
-
-        // Show the filter input
-        filterEl.parentNode.style.display = 'block';
-
-      } else if (features.length === 0 && filterEl.value !== '') {
-        empty.textContent = 'No results found';
-        listingEl.appendChild(empty);
-
-      } else {
-        empty.textContent = 'Drag the map to populate results';
-        listingEl.appendChild(empty);
-
-        // Show the filter input
-        filterEl.parentNode.style.display = 'block';
-
-        // remove features filter
-        map.setFilter('resource', ['has', 'orgLink']);
-      }
-    }
-
-    function normalize(string) {
-      return string.trim().toLowerCase();
-    }
-
-    // Because features come from tiled vector data, feature geometries may be split or duplicated across tile boundaries. As a result, features may appear multiple times in query results.
-    function getUniqueFeatures(features, comparatorProperty) {
-      const uniqueIds = new Set();
-      const uniqueFeatures = [];
-      for (const feature of features) {
-        const id = feature.properties[comparatorProperty];
-        if (!uniqueIds.has(id)) {
-          uniqueIds.add(id);
-          uniqueFeatures.push(feature);
-        }
-      }
-      return uniqueFeatures;
-    }
-
-    $(document).ready(function () {
-      $.ajax({
-        type: "GET",
-        //YOUR TURN: Replace with csv export link
-        url: 'https://docs.google.com/spreadsheets/d/1DR1vvT3nVqXwfbxo9HOE8YCsLrsRoJk2ojdxApv6-ak/gviz/tq?tqx=out:csv&gid=1072666960',
-        dataType: "text",
-        success: function (resource) { makeGeoJSON(resource); }
-      })});
-
-      function makeGeoJSON(resource) {
-        csv2geojson.csv2geojson(resource, {
-          latfield: 'latitude',
-          lonfield: 'longitude',
-          delimiter: ','
-        }, function (err, data) {
-          map.on('load', function () {
-
-            //Add the the layer to the map
-            map.addLayer({
-              'id': 'resource',
-              'type': 'circle',
-              'source': {
-                'type': 'geojson',
-                'data': data
-              },
-          'paint': {
-            'circle-color': '#f3058e',
-            'circle-radius': 4,
-            'circle-opacity': 0.71,
-            'circle-stroke-width': 2,
-            'circle-stroke-color': '#9d181d'
-          }
-      })}
-      )});
-
-      map.on('movestart', () => {
-          // reset features filter as the map starts moving
-          map.setFilter('resource', ['has', 'orgName']);
+      const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mqqt/claxt1hpw000114pdg7bl6l5w/draft',
+        center: [-110.641557, 35.893748],
+        minZoom: 2.7,
+        zoom: 3.0
       });
-
-      map.on('moveend', () => {
-        const features = map.queryRenderedFeatures({ layers: ['resource'] });
-
-        if (features) {
-          const uniqueFeatures = getUniqueFeatures(features, 'orgName');
-          // Populate features for the listing overlay.
-          renderListings(uniqueFeatures);
-
-          // Clear the input container
-          filterEl.value = '';
-
-          // Store the current features in sn `resources` variable to later use for filtering on `keyup`.
-          resources = uniqueFeatures;
-        }
-      });
-
-      // Add an event listener that runs when a user clicks on the map element.
-      map.on('click', 'resource', (event) => {
-        // Change the cursor style as a UI indicator.
-        map.getCanvas().style.cursor = 'pointer';
-
-        // Populate the popup and set its coordinates based on the feature.
-        const feature = event.features[0];
-
-        //Create a popup, specify its options and properties, and add it to the map.
-        const popup = new mapboxgl.Popup({
-          className: 'marker-popup',
-          maxWidth: '550px'
-        })
+      
+      map.addControl(new mapboxgl.NavigationControl());
+      
+      /*
+        Add a marker at WWHI's coordinates, based on https://docs.mapbox.com/help/tutorials/custom-markers-gl-js/
+      */
+      const geojson = {
+        type: 'FeatureCollection',
+        features: [
+          {
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: [-88.787436, 44.8555164] // WWHI's [lng, lat] coordinates
+            },
+            properties: {
+              title: 'Waking Women Healing Institute',
+              description: 'Waking Women Healing Institute'
+            }
+          }
+        ]
+      };
+      
+      // add markers to map for each Feature
+      for (const feature of geojson.features) {
+        // create a HTML element for each feature
+        const el = document.createElement('div');
+        el.className = 'marker';
+        // make a marker for each feature and add to the map
+        new mapboxgl.Marker(el)
           .setLngLat(feature.geometry.coordinates)
-          .setHTML(
-            `<div class='popup-title'>
-              <a href='${feature.properties.orgLink}' target='_blank'>
-              <h3>${feature.properties.orgName}</h3>
-              </a>
-             <a href='${feature.properties.orgLink}' class='fa-home'><img src='assets/fa-home.png'></a>
-              <a href='${feature.properties.facebookLink}' class='fa-fb'><img src='assets/fa-fb-b.png'></a>
-            </div>
-            <div class='popup-contact'>
-              <p><strong>Contact </strong><span>${feature.properties.contactPerson}</p>
-              <p><strong>Email </strong><a href='mailto:${feature.properties.email}'>${feature.properties.email}</a></p>
-              <p><strong>Phone </strong><span>${feature.properties.phone}</span></p>
-            </div>
-            <div class='popup-address'>
-              <p><strong>Address </strong><span>${feature.properties.fullAddress}</span></p>
-              <p><strong>Area Served </strong><span>${feature.properties.areaServed}</span></p>
-            </div>
-            <div class='popup-services'>
-              <p><strong>Founded in </strong>${feature.properties.yearFounded}</p>
-              <p><strong>Services </strong>${feature.properties.services}</p>
-              <p><strong>Past Work </strong>${feature.properties.pastWork}</p>
-              <p><strong>Specific Competencies </strong>${feature.properties.specificCompetencies}</p>
-            </div>`
-          )
           .addTo(map);
+      }
+      
+      
+      /*
+        Create left filter search; based on https://docs.mapbox.com/mapbox-gl-js/example/filter-features-within-map-view/
+      */
+      
+      // Holds visible resource features for filtering
+      let resources = [];
+      
+      // Create a popup, but don't add it to the map yet.
+      const popup = new mapboxgl.Popup({
+        closeButton: false,
+        className: 'search-popup'
       });
-
-      filterEl.addEventListener('keyup', (e) => {
-        const value = normalize(e.target.value);
-
-        // Filter visible features that match the input value.
-        const filtered = [];
-        for (const feature of resources) {
-          const name = normalize(feature.properties.orgName);
-          const link = normalize(feature.properties.orgLink);
-          if (name.includes(value) || link.includes(value)) {
-            filtered.push(feature);
+      
+      const filterEl = document.getElementById('feature-filter');
+      const listingEl = document.getElementById('feature-listing');
+      
+      function renderListings(features) {
+        const empty = document.createElement('p');
+      
+        // Clear any existing listings
+        listingEl.innerHTML = '';
+        if (features.length) {
+          for (const feature of features) {
+            const itemLink = document.createElement('a');
+            const label = `${feature.properties.orgName}`;
+            itemLink.href = feature.properties.orgLink;
+            itemLink.target = '_blank';
+            itemLink.textContent = label;
+            itemLink.addEventListener('mouseover', () => {
+              // Highlight corresponding feature on the map
+              popup
+                .setLngLat(feature.geometry.coordinates)
+                .setHTML(
+                  `<h3>${feature.properties.orgName}</h3>
+                   <p>${feature.properties.fullAddress}</p>`
+                )
+                .addTo(map);
+            });
+            listingEl.appendChild(itemLink);
+            itemLink.addEventListener('mouseleave', () => {
+              popup.remove();
+            });
+          }
+      
+          // Show the filter input
+          filterEl.parentNode.style.display = 'block';
+      
+        } else if (features.length === 0 && filterEl.value !== '') {
+          empty.textContent = 'No results found';
+          listingEl.appendChild(empty);
+      
+        } else {
+          empty.textContent = 'Drag the map to populate results';
+          listingEl.appendChild(empty);
+      
+          // Show the filter input
+          filterEl.parentNode.style.display = 'block';
+      
+          // remove features filter
+          map.setFilter('resource', ['has', 'orgLink']);
+        }
+      }
+      
+      function normalize(string) {
+        return string.trim().toLowerCase();
+      }
+      
+      // Because features come from tiled vector data, feature geometries may be split or duplicated across tile boundaries. As a result, features may appear multiple times in query results.
+      function getUniqueFeatures(features, comparatorProperty) {
+        const uniqueIds = new Set();
+        const uniqueFeatures = [];
+        for (const feature of features) {
+          const id = feature.properties[comparatorProperty];
+          if (!uniqueIds.has(id)) {
+            uniqueIds.add(id);
+            uniqueFeatures.push(feature);
           }
         }
+        return uniqueFeatures;
+      }
+      
+      $(document).ready(function () {
+        $.ajax({
+          type: "GET",
+          //YOUR TURN: Replace with csv export link
+          url: 'https://docs.google.com/spreadsheets/d/1DR1vvT3nVqXwfbxo9HOE8YCsLrsRoJk2ojdxApv6-ak/gviz/tq?tqx=out:csv&gid=1072666960',
+          dataType: "text",
+          success: function (resource) { makeGeoJSON(resource); }
+        })});
+      
+        function makeGeoJSON(resource) {
+          csv2geojson.csv2geojson(resource, {
+            latfield: 'latitude',
+            lonfield: 'longitude',
+            delimiter: ','
+          }, function (err, data) {
+            map.on('load', function () {
+      
+              //Add the the layer to the map
+              map.addLayer({
+                'id': 'resource',
+                'type': 'circle',
+                'source': {
+                  'type': 'geojson',
+                  'data': data
+                },
+            'paint': {
+              'circle-color': '#f3058e',
+              'circle-radius': 4,
+              'circle-opacity': 0.71,
+              'circle-stroke-width': 2,
+              'circle-stroke-color': '#9d181d'
+            }
+        })}
+        )});
+      
+        map.on('movestart', () => {
+            // reset features filter as the map starts moving
+            map.setFilter('resource', ['has', 'orgName']);
+        });
+      
+        map.on('moveend', () => {
+          const features = map.queryRenderedFeatures({ layers: ['resource'] });
+      
+          if (features) {
+            const uniqueFeatures = getUniqueFeatures(features, 'orgName');
+            // Populate features for the listing overlay.
+            renderListings(uniqueFeatures);
+      
+            // Clear the input container
+            filterEl.value = '';
+      
+            // Store the current features in sn `resources` variable to later use for filtering on `keyup`.
+            resources = uniqueFeatures;
+          }
+        });
+      
+        // Add an event listener that runs when a user clicks on the map element.
+        map.on('click', 'resource', (event) => {
+          // Change the cursor style as a UI indicator.
+          map.getCanvas().style.cursor = 'pointer';
+      
+          // Populate the popup and set its coordinates based on the feature.
+          const feature = event.features[0];
+          if (feature.properties.contactPerson === "") {cp_descrip = ""} 
+            else {cp_descrip = "<p><strong>Contact </strong><span>${feature.properties.contactPerson}</p>"}
 
-        // Populate the sidebar with filtered results
-        renderListings(filtered);
+          //Create a popup, specify its options and properties, and add it to the map.
 
-        // Set the filter to populate features into the layer.
-        if (filtered.length) {
-          map.setFilter('resource', [
-            'match',
-            ['get', 'orgLink'],
-            filtered.map((feature) => {
-              return feature.properties.orgLink;
-            }),
-            true,
-            false
-          ]);
-        }
-      });
-
-      // Call this function on initialization
-      // passing an empty array to render an empty state
-      renderListings([]);
-    };
-
-    </script>
+          const popup = new mapboxgl.Popup({
+            className: 'marker-popup',
+            maxWidth: '550px'
+          })
+            .setLngLat(feature.geometry.coordinates)
+            .setHTML(
+              `<div class='popup-title'>
+                
+                <a href='${feature.properties.orgLink}' target='_blank'>
+                <h3>${feature.properties.orgName}</h3>
+                </a>
+               <a href='${feature.properties.orgLink}' class='fa-home'><img src='assets/fa-home.png'></a>
+                <a href='${feature.properties.facebookLink}' class='fa-fb'><img src='assets/fa-fb-b.png'></a>
+              </div>
+              <div class='popup-contact' id='contact'>
+              ${cp_descrip}
+              <p><strong>Email </strong><a href='mailto:${feature.properties.email}'>${feature.properties.email}</a></p>
+                <p><strong>Phone </strong><span>${feature.properties.phone}</span></p>
+              </div>
+              <div class='popup-address'>
+                <p><strong>Address </strong><span>${feature.properties.fullAddress}</span></p>
+                <p><strong>Area Served </strong><span>${feature.properties.areaServed}</span></p>
+              </div>
+              <div class='popup-services'>
+                <p><strong>Founded in </strong>${feature.properties.yearFounded}</p>
+                <p><strong>Services </strong>${feature.properties.services}</p>
+                <p><strong>Past Work </strong>${feature.properties.pastWork}</p>
+                <p><strong>Specific Competencies </strong>${feature.properties.specificCompetencies}</p>
+              </div>`
+            )
+            .addTo(map);
+        });
     
+
+        filterEl.addEventListener('keyup', (e) => {
+          const value = normalize(e.target.value);
+      
+          // Filter visible features that match the input value.
+          const filtered = [];
+          for (const feature of resources) {
+            const name = normalize(feature.properties.orgName);
+            const link = normalize(feature.properties.orgLink);
+            if (name.includes(value) || link.includes(value)) {
+              filtered.push(feature);
+            }
+          }
+      
+          // Populate the sidebar with filtered results
+          renderListings(filtered);
+      
+          // Set the filter to populate features into the layer.
+          if (filtered.length) {
+            map.setFilter('resource', [
+              'match',
+              ['get', 'orgLink'],
+              filtered.map((feature) => {
+                return feature.properties.orgLink;
+              }),
+              true,
+              false
+            ]);
+          }
+        });
+      
+        // Call this function on initialization
+        // passing an empty array to render an empty state
+        renderListings([]);
+      };
+      </script>
   </body>
 </html>
 
