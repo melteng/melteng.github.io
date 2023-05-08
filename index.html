@@ -231,7 +231,7 @@
           // Populate the popup and set its coordinates based on the feature.
           const feature = event.features[0];
           if (feature.properties.contactPerson === "") {cp_descrip = ""} 
-            else {cp_descrip = "<p><strong>Contact </strong><span>${feature.properties.contactPerson}</p>"}
+            else {cp_descrip = `<p><strong>Contact </strong><span>${feature.properties.contactPerson}</p>`}
 
           //Create a popup, specify its options and properties, and add it to the map.
 
