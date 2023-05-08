@@ -213,8 +213,7 @@
       .marker-popup .popup-address,
       .marker-popup .popup-contact,
       .marker-popup .popup-services {
-        padding: 1rem;
-      }
+         padding: 1rem;} 
 
       .marker-popup .popup-title h3 {
         margin: 0;
