@@ -230,6 +230,11 @@
       
           // Populate the popup and set its coordinates based on the feature.
           const feature = event.features[0];
+          if (feature.properties.orgLink === "") {working_link = feature.properties.facebookLink, org_link_icon=""}
+            else {working_link = feature.properties.orgLink, org_link_icon = `<a href='${feature.properties.orgLink}' class='fa-home'><img src='assets/fa-home.png'></a>`}
+          if (feature.properties.facebookLink === "") {fblink = ""}
+            else {fblink = `<a href='${feature.properties.facebookLink}' class='fa-fb'><img src='assets/fa-fb.png'></a>`}
+
           if (feature.properties.contactPerson === "") {cp_descrip = ""} 
             else {cp_descrip = `<p><strong>Contact </strong><span>${feature.properties.contactPerson}</p>`}
           if (feature.properties.email === "") {email = ""} 
@@ -238,6 +243,9 @@
               else {phone = `<p><strong>Phone </strong><span>${feature.properties.phone}</span></p>`}
           if (feature.properties.fullAddress === "") {address = ""}
               else {address = `<p><strong>Address </strong><span>${feature.properties.fullAddress}</span></p>`}
+          if (address === "" && phone === "" && email === "") {div1_content = "", div_end = ""}
+              else {div1_content= "<div class='popup-contact' id='contact'>", div_end= "</div>"}
+
           if (feature.properties.areaServed === "") {aServed = ""}
               else {aServed = `<p><strong>Area Served </strong><span>${feature.properties.areaServed}</span></p>`}
           if (feature.properties.yearFounded === "") {yrFounded = ""} 
@@ -258,17 +266,17 @@
             .setHTML(
               `<div class='popup-title'>
                 
-                <a href='${feature.properties.orgLink}' target='_blank'>
+                <a href='${working_link}' target='_blank'>
                 <h3>${feature.properties.orgName}</h3>
                 </a>
-               <a href='${feature.properties.orgLink}' class='fa-home'><img src='assets/fa-home.png'></a>
-                <a href='${feature.properties.facebookLink}' class='fa-fb'><img src='assets/fa-fb-b.png'></a>
+               ${org_link_icon}
+               ${fblink}
               </div>
-              <div class='popup-contact' id='contact'>
+              ${div1_content}
               ${cp_descrip}
               ${email}
               ${phone}  
-              </div>
+              ${div_end}
               <div class='popup-address'>
               ${address}
               ${aServed}
