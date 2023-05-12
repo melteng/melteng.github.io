@@ -241,11 +241,11 @@
             else {email = `<p><strong>Email </strong><a href='mailto:${feature.properties.email}'>${feature.properties.email}</a></p>`}
           if (feature.properties.phone === "") {phone = ""}
               else {phone = `<p><strong>Phone </strong><span>${feature.properties.phone}</span></p>`}
-          if (feature.properties.fullAddress === "") {address = ""}
-              else {address = `<p><strong>Address </strong><span>${feature.properties.fullAddress}</span></p>`}
-          if (address === "" && phone === "" && email === "") {div1_content = "", div_end = ""}
+          if (cp_descrip == "" && phone == "" && email == "") {div1_content = "", div_end = ""}
               else {div1_content= "<div class='popup-contact' id='contact'>", div_end= "</div>"}
 
+          if (feature.properties.fullAddress === "") {address = ""}
+              else {address = `<p><strong>Address </strong><span>${feature.properties.fullAddress}</span></p>`}
           if (feature.properties.areaServed === "") {aServed = ""}
               else {aServed = `<p><strong>Area Served </strong><span>${feature.properties.areaServed}</span></p>`}
           if (feature.properties.yearFounded === "") {yrFounded = ""} 
