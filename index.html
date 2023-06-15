@@ -26,12 +26,15 @@
     <div id='about'>
       <div id='intro-text'>
         <h1>MMIW/P Resource Map</h1>
+        <div id="content" class="intro">
         <p>This is a growing map of MMIW/P resources available across Turtle Island. The map was co-developed with MIT Students & Waking Women Healing Institute to quickly locate agencies, non-profits, grassroots, and organizations that provide direct services to families of MMIW/P and Survivors of Violence. The hope is to improve responses to and increase access to supports for those experiencing violence and cases of MMIW/P. By clicking on each dot, a pop-up opens that shares location, contact details, and services available for each entity, where we could find them. We invite you to explore the MMIW/P Resource Map.</p>
+        <div>
+          <a href='https://www.wakingwomenhealingint.org/' target='_blank'><img src='assets/wwhi-logo.png'/></a>
+        </div>
       </div>
-      <div>
-        <a href='https://www.wakingwomenhealingint.org/' target='_blank'><img src='assets/wwhi-logo.png'/></a>
-      </div>
+      <button style="background:#EFEFEF;color:black;border-radius: 15px; font-size: small;" type="button" class="btn-minimize">Show/Hide Intro</button>
     </div>
+  </div>
   <body>
     <div id='map-container'>
       <div id='map'></div>
@@ -42,6 +45,7 @@
         <div id="feature-listing" class="listing"></div>
       </div>
     </div>
+  </div>
     <script>mapboxgl.accessToken = 'pk.eyJ1IjoibXFxdCIsImEiOiJjbGFyMHUxZXgxbnV5M3Bxcnl2eGc3eXgzIn0.9WJL8GwpLdJEa1c6vk57iw';
 
       const map = new mapboxgl.Map({
@@ -53,6 +57,10 @@
       });
       
       map.addControl(new mapboxgl.NavigationControl());
+      
+          $(".btn-minimize").click(function(){
+        $(".intro").slideToggle();
+      });
       
       /*
         Add a marker at WWHI's coordinates, based on https://docs.mapbox.com/help/tutorials/custom-markers-gl-js/

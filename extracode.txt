@@ -1,0 +1,11 @@
+  async function logJSONData() {
+        const response = await fetch("https://native-land.ca/wp-content/themes/NLD-2021/files/indigenousTerritories.json");
+        const nativeLandData = await response;
+        console.log(nativeLandData)
+        return nativeLandData.json();
+          }
+        
+      var nativeLandGJ = {
+        "type": "FeatureCollection",
+        "features": logJSONData()
+          }

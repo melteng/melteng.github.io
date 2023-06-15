@@ -72,22 +72,18 @@
 
       /* about styles */
       #about h1, #about p {
-        margin: 0;
-        color: #243114;
-      }
-
-      @media screen and (min-width: 769px) {
-        #about {
-          flex-direction: row;
-        }
-
-        #intro-text {
           margin-right: 60px;
           display: flex;
           flex-direction: column;
           justify-content: center;
         }
-      }
+
+
+      @media screen and (min-width: 769px) {
+        #about {
+          flex-direction: row;
+        }}
+
 
       #about img {
         display: block;
