@@ -195,7 +195,10 @@
                   'type': 'geojson',
                   'data': data
                 });
-         
+            for (const feature of data.features) {
+              const color = feature.properties.color
+            }
+                
               //Add the the layer to the map
               map.addLayer({
                 'id': 'resource',
@@ -301,15 +304,15 @@
         });
     
 
-        filterEl.addEventListener('keyup', (e) => {
+        filterEl.addEventListener('input', (e) => {
+          
           const value = normalize(e.target.value);
-      
           // Filter visible features that match the input value.
           const filtered = [];
           for (const feature of resources) {
             const name = normalize(feature.properties.orgName);
-            const link = normalize(feature.properties.orgLink);
-            if (name.includes(value) || link.includes(value)) {
+            const descr = normalize(feature.properties.services)
+            if (name.includes(value) || descr.includes(value)) {
               filtered.push(feature);
             }
           }
