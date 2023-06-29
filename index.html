@@ -40,12 +40,38 @@
       <div id='map'></div>
       <div class="map-overlay">
         <fieldset>
-          <input id="feature-filter" type="text" placeholder="Filter results by name">
+          <input id="feature-filter" type="text" placeholder="Filter results by name or services">
         </fieldset>
         <div id="feature-listing" class="listing"></div>
       </div>
     </div>
   </div>
+  <div id="resource-legend" class="legend" style="background-color: #fff;
+  border-radius: 3px;
+  bottom: -80px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  padding: 10px;
+  position: absolute;
+  right: 10px;
+  z-index: 1;">
+    <h6 style="margin: 0 0 10px;">Organization type</h6>
+    <div><span style="background-color: #f3058e; border-radius: 50%;
+      display: inline-block;
+      height: 10px;
+      margin-right: 5px;
+      width: 10px;"></span>Direct services</div>
+    <div><span style="background-color: #FBAA1A; border-radius: 50%;
+      display: inline-block;
+      height: 10px;
+      margin-right: 5px;
+      width: 10px;"></span>Coalition</div>
+    <div><span style="background-color: #C03EFA;border-radius: 50%;
+display: inline-block;
+height: 10px;
+margin-right: 5px;
+width: 10px;"></span>Both coaltion & services</div>
+
     <script>mapboxgl.accessToken = 'pk.eyJ1IjoibXFxdCIsImEiOiJjbGFyMHUxZXgxbnV5M3Bxcnl2eGc3eXgzIn0.9WJL8GwpLdJEa1c6vk57iw';
 
       const map = new mapboxgl.Map({
@@ -92,8 +118,7 @@
           .setLngLat(feature.geometry.coordinates)
           .addTo(map);
       }
-      
-      
+            
       /*
         Create left filter search; based on https://docs.mapbox.com/mapbox-gl-js/example/filter-features-within-map-view/
       */
@@ -175,6 +200,11 @@
         return uniqueFeatures;
       }
       
+      map.on('load', () => {
+        const resourceLegend = document.getElementById('resource-legend');
+        resourceLegend.style.display = 'block';
+      });
+
       $(document).ready(function () {
         $.ajax({
           type: "GET",
