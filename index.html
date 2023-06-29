@@ -191,17 +191,18 @@
             delimiter: ','
           }, function (err, data) {
             map.on('load', function () {
-      
+              map.addSource('org_locs', {
+                  'type': 'geojson',
+                  'data': data
+                });
+         
               //Add the the layer to the map
               map.addLayer({
                 'id': 'resource',
                 'type': 'circle',
-                'source': {
-                  'type': 'geojson',
-                  'data': data
-                },
+                'source': 'org_locs',
             'paint': {
-              'circle-color': '#f3058e',
+              'circle-color': ['get','color'],
               'circle-radius': 4,
               'circle-opacity': 0.71,
               'circle-stroke-width': 2,
