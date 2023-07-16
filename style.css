@@ -73,8 +73,8 @@
       /* about styles */
       #about h1, #about p {
           margin-right: 60px;
-          display: flex;
-          flex-direction: column;
+          display: inline-flexbox;
+          flex-direction: row;
           justify-content: center;
         }
 
@@ -100,9 +100,14 @@
         font-size: 1.3rem;
       }
 
+      #about a {
+        white-space: nowrap;
+        display: inline-block;
+      }
+
       #about p {
-        font-size: 1rem;
-        line-height: 1.5;
+        font-size: .75rem;
+        line-height: 1.25;
       }
 
       /* map styles */
