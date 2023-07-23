@@ -2,11 +2,11 @@
       body{
         margin: 0;
         padding: 0;
-        font-family: 'PT+Sans';
+        font-family: 'PT Sans';
       }
 
       .mapboxgl-map {
-        font-family: 'PT+Sans';
+        font-family: 'PT Sans';
         font-size: 1rem;
       }
 
@@ -115,7 +115,7 @@
       }
 
       .map-overlay {
-        font-family: 'PT+Sans';
+        font-family: 'PT Sans';
         font-size: 1rem;
         background-color: #efefef;
         max-height: 100%;
@@ -137,7 +137,7 @@
         border-radius: 3px;
         padding: 10px;
         margin: 0;
-        font-family: 'PT+Sans';
+        font-family: 'PT Sans';
         font-size: 1rem;
         color: #aa0736;
         box-sizing: border-box;
