@@ -42,7 +42,7 @@
           <a href='https://www.wakingwomenhealingint.org/' target='_blank'><img src='assets/wwhi-logo.png'/></a>
         </div>
       </div>
-      <button style="background:#EFEFEF;color:black;border-radius: 15px; font-size: small;" type="button" class="btn-minimize">Show/Hide Intro</button>
+      <button style="background:#EFEFEF;color:black;border-radius: 15px; font-size: small;" type="button" class="btn-minimize">X</button>
     </div>
   </div>
   <body>
@@ -58,12 +58,12 @@
   </div>
   <div id="resource-legend" class="legend" style="background-color: #fff;
   border-radius: 3px;
-  bottom: -120px;
+  bottom: -20%;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
   padding: 10px;
   position: absolute;
-  right: 720px;
+  right: 5%;
   z-index: 1;">
     <h6 style="margin: 0 0 10px;">Organization type</h6>
     <div><span style="background-color: #f3058e; border-radius: 50%;
@@ -96,8 +96,19 @@ width: 10px;"></span>Both coaltion & services</div>
       
           $(".btn-minimize").click(function(){
         $(".intro").slideToggle();
+
+        if($(this).text() == 'X')
+    {
+        $(this).text('Show');
+    }
+    else
+    {
+        $(this).text('X');   
+    }
       });
       
+
+
       /*
         Add a marker at WWHI's coordinates, based on https://docs.mapbox.com/help/tutorials/custom-markers-gl-js/
       */
@@ -133,6 +144,7 @@ width: 10px;"></span>Both coaltion & services</div>
         Create left filter search; based on https://docs.mapbox.com/mapbox-gl-js/example/filter-features-within-map-view/
       */
       
+
       // Holds visible resource features for filtering
       let resources = [];
       
@@ -154,7 +166,12 @@ width: 10px;"></span>Both coaltion & services</div>
           for (const feature of features) {
             const itemLink = document.createElement('a');
             const label = `${feature.properties.orgName}`;
-            itemLink.href = feature.properties.orgLink;
+            if (feature.properties.orgLink != "")
+              {itemLink.href = feature.properties.orgLink}
+            else if (feature.properties.facebookLink != "")
+              {itemLink.href = feature.properties.facebookLink}
+            else {itemLink.href = ""}
+
             itemLink.target = '_blank';
             itemLink.textContent = label;
             itemLink.addEventListener('mouseover', () => {
