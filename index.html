@@ -58,12 +58,12 @@
   </div>
   <div id="resource-legend" class="legend" style="background-color: #fff;
   border-radius: 3px;
-  bottom: -15%;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   font: 12px/20px PT Sans, Arial, Helvetica, sans-serif;
   padding: 10px;
+  left: 28%;
+  bottom: -90%;
   position: absolute;
-  right: 5%;
   z-index: 1;">
     <h6 style="margin: 0 0 10px;">Organization type</h6>
     <div><span style="background-color: #f3058e; border-radius: 50%;
@@ -100,10 +100,12 @@ width: 10px;"></span>Both coaltion & services</div>
         if($(this).text() == 'X')
     {
         $(this).text('Show');
+        $(".legend").animate({bottom: '-50px'})
     }
     else
     {
-        $(this).text('X');   
+        $(this).text('X');
+        $(".legend").animate({bottom: '-90%'})   
     }
       });
       
