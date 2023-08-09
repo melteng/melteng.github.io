@@ -40,7 +40,6 @@
           </p>
         <div>
           <a href='https://www.wakingwomenhealingint.org/' target='_blank'><img src='assets/wwhi-logo.png'/></a>
-          <img src="'assets/legend.png"/>
         </div>
       </div>
       <button style="background:#EFEFEF;color:black;border-radius: 15px; font-size: small;position: absolute; top: 40px; right:5%" type="button" class="btn-minimize">X</button>
@@ -53,35 +52,36 @@
         <fieldset>
           <input id="feature-filter" type="text" placeholder="Filter results by name or services">
         </fieldset>
-        <div id="feature-listing" class="listing"></div>
+       <div id="feature-listing" class="listing">
+        </div>
+        <div id="resource-legend" class="legend" style="background-color: #dacfd3;
+          border-radius: 3px;
+          font: 13px/20px PT Sans, Arial, Helvetica, sans-serif;
+          padding: 10px;
+          position: absolute;
+          bottom: 0%;
+          width: 95%;
+          z-index: 1;">
+            <h6 style="margin: 0 0 10px;">Organization type</h6>
+            <div><span style="background-color: #f3058e; border-radius: 50%;
+              display: inline-block;
+              height: 10px;
+              margin-right: 5px;
+              width: 10px;"></span>Direct services</div>
+            <div><span style="background-color: #FBAA1A; border-radius: 50%;
+              display: inline-block;
+              height: 10px;
+              margin-right: 5px;
+              width: 10px;"></span>Coalition</div>
+            <div><span style="background-color: #C03EFA;border-radius: 50%;
+        display: inline-block;
+        height: 10px;
+        margin-right: 5px;
+        width: 10px;"></span>Both coaltion & services</div>
       </div>
     </div>
   </div>
-  <div id="resource-legend" class="legend" style="background-color: #fff;
-  border-radius: 3px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  font: 12px/20px PT Sans, Arial, Helvetica, sans-serif;
-  padding: 10px;
-  left: 28%;
-  bottom: -90%;
-  position: absolute;
-  z-index: 1;">
-    <h6 style="margin: 0 0 10px;">Organization type</h6>
-    <div><span style="background-color: #f3058e; border-radius: 50%;
-      display: inline-block;
-      height: 10px;
-      margin-right: 5px;
-      width: 10px;"></span>Direct services</div>
-    <div><span style="background-color: #FBAA1A; border-radius: 50%;
-      display: inline-block;
-      height: 10px;
-      margin-right: 5px;
-      width: 10px;"></span>Coalition</div>
-    <div><span style="background-color: #C03EFA;border-radius: 50%;
-display: inline-block;
-height: 10px;
-margin-right: 5px;
-width: 10px;"></span>Both coaltion & services</div>
+ 
 
     <script>mapboxgl.accessToken = 'pk.eyJ1IjoibXFxdCIsImEiOiJjbGFyMHUxZXgxbnV5M3Bxcnl2eGc3eXgzIn0.9WJL8GwpLdJEa1c6vk57iw';
 
@@ -101,12 +101,10 @@ width: 10px;"></span>Both coaltion & services</div>
         if($(this).text() == 'X')
     {
         $(this).text('Show');
-        $(".legend").animate({bottom: '-50px'})
     }
     else
     {
-        $(this).text('X');
-        $(".legend").animate({bottom: '-90%'})   
+        $(this).text('X'); 
     }
       });
       
